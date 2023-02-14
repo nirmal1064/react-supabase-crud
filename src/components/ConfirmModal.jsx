@@ -28,7 +28,7 @@ const ConfirmModal = ({ show, handleClose, id }) => {
         <p>Do you want to delete the contact?</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="secondary" onClick={handleDelete}>
+        <Button variant="secondary" onClick={handleClose}>
           No
         </Button>
         <Button disabled={loading} variant="danger" onClick={handleDelete}>
