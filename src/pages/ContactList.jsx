@@ -3,6 +3,7 @@ import { Button, Table } from "react-bootstrap";
 import ContactModal from "../components/ContactModal";
 import { useContacts } from "../context/ContactProvider";
 import ConfirmModal from "../components/ConfirmModal";
+import ToastMessage from "../components/ToastMessage";
 
 const ContactList = () => {
   const { contacts } = useContacts();
@@ -29,6 +30,18 @@ const ContactList = () => {
 
   return (
     <div>
+      <ToastMessage
+        type="Success"
+        show={msg ? true : false}
+        message={msg}
+        handleClose={() => setMsg("")}
+      />
+      <ToastMessage
+        type="Error"
+        show={errorMsg ? true : false}
+        message={errorMsg}
+        handleClose={() => setErrorMsg("")}
+      />
       <ContactModal
         show={showContactModal}
         handleClose={closeContactModal}
