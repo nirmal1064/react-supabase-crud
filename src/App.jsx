@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import PasswordReset from "./pages/PasswordReset";
 import Register from "./pages/Register";
 import UpdatePassword from "./pages/UpdatePassword";
+import ContactProvider from "./context/ContactProvider";
+import ContactList from "./pages/ContactList";
 
 const App = () => {
   return (
@@ -18,6 +20,14 @@ const App = () => {
             <Route element={<AuthRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/home" element={<Home />} />
+              <Route
+                path="/contacts"
+                element={
+                  <ContactProvider>
+                    <ContactList />
+                  </ContactProvider>
+                }
+              />
             </Route>
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
