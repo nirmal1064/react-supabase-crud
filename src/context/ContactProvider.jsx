@@ -30,6 +30,28 @@ const ContactProvider = ({ children }) => {
     if (error) setErrorMsg("Error in Fetching Contacts");
   };
 
+  const editContact = async (contact, id) => {
+    const { data, error } = await supabase
+      .from("contacts")
+      .update(contact)
+      .eq("id", id)
+      .select();
+    if (error) {
+      setErrorMsg(error.message);
+      console.error(error);
+    }
+    if (data) {
+      setMsg("Contact Updated");
+      const updatedContacts = contacts.map((contact) => {
+        if (id === contact.id) {
+          return { ...contact, ...data[0] };
+        }
+        return contact;
+      });
+      setContacts(updatedContacts);
+    }
+  };
+
   useEffect(() => {
     fetchAll();
   }, []);
@@ -43,7 +65,8 @@ const ContactProvider = ({ children }) => {
         errorMsg,
         setErrorMsg,
         addContact,
-        fetchAll
+        fetchAll,
+        editContact
       }}>
       {children}
     </ContactContext.Provider>
