@@ -52,6 +52,18 @@ const ContactProvider = ({ children }) => {
     }
   };
 
+  const deleteContact = async (id) => {
+    const { error } = await supabase.from("contacts").delete().eq("id", id);
+    if (error) {
+      setErrorMsg(error.message);
+    } else {
+      setMsg("Contact Deleted Successfully");
+      setContacts((prevContacts) =>
+        prevContacts.filter((contact) => contact.id !== id)
+      );
+    }
+  };
+
   useEffect(() => {
     fetchAll();
   }, []);
@@ -66,7 +78,8 @@ const ContactProvider = ({ children }) => {
         setErrorMsg,
         addContact,
         fetchAll,
-        editContact
+        editContact,
+        deleteContact
       }}>
       {children}
     </ContactContext.Provider>
