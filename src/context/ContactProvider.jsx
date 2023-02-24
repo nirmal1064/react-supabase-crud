@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from "react";
+import { supabase } from "../supabase/client";
 
 const ContactContext = createContext({});
 
@@ -9,6 +10,13 @@ const ContactProvider = ({ children }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [msg, setMsg] = useState("");
 
+  const addContact = async (contact) => {
+    const { error } = await supabase.from("contacts").insert(contact);
+    if (error) {
+      setErrorMsg(error.message);
+    }
+  };
+
   return (
     <ContactContext.Provider
       value={{
@@ -16,7 +24,8 @@ const ContactProvider = ({ children }) => {
         msg,
         setMsg,
         errorMsg,
-        setErrorMsg
+        setErrorMsg,
+        addContact
       }}>
       {children}
     </ContactContext.Provider>
