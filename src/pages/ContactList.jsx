@@ -70,7 +70,13 @@ const ContactList = () => {
               <td>{contact.phone}</td>
               <td>{contact.address}</td>
               <td className="d-flex flex-row justify-content-around">
-                <i className="bi bi-pencil-square"></i>
+                <i
+                  className="bi bi-pencil-square icon"
+                  onClick={() => {
+                    setActiveContact(contact);
+                    setType("Edit");
+                    setShowContactModal(true);
+                  }}></i>
                 <i className="bi bi-trash3"></i>
               </td>
             </tr>

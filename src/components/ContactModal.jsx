@@ -7,7 +7,7 @@ const ContactModal = ({ show, handleClose, type, contact }) => {
   const nameRef = useRef(null);
   const phoneRef = useRef(null);
   const addressRef = useRef(null);
-  const { addContact, setErrorMsg } = useContacts();
+  const { addContact, setErrorMsg, editContact } = useContacts();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ const ContactModal = ({ show, handleClose, type, contact }) => {
         address: addressRef.current.value
       };
       if (type === "Edit") {
-        // Yet to implement
+        await editContact(contactToSave, contact.id);
       } else {
         await addContact(contactToSave);
       }
