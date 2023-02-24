@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import ContactModal from "../components/ContactModal";
 import { useContacts } from "../context/ContactProvider";
+import ConfirmModal from "../components/ConfirmModal";
 
 const ContactList = () => {
   const { msg, setMsg, errorMsg, setErrorMsg } = useContacts();
@@ -9,6 +10,12 @@ const ContactList = () => {
   const [type, setType] = useState("");
   const [activeContact, setActiveContact] = useState({});
   const { contacts } = useContacts();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const closeConfirmModal = () => {
+    setActiveContact({});
+    setShowConfirmModal(false);
+  };
 
   const closeContactModal = () => {
     setActiveContact({});
@@ -40,6 +47,11 @@ const ContactList = () => {
         handleClose={closeContactModal}
         type={type}
         contact={activeContact}
+      />
+      <ConfirmModal
+        show={showConfirmModal}
+        handleClose={closeConfirmModal}
+        id={activeContact.id}
       />
       <div
         style={{
@@ -77,7 +89,12 @@ const ContactList = () => {
                     setType("Edit");
                     setShowContactModal(true);
                   }}></i>
-                <i className="bi bi-trash3"></i>
+                <i
+                  className="bi bi-trash3 icon"
+                  onClick={() => {
+                    setActiveContact(contact);
+                    setShowConfirmModal(true);
+                  }}></i>
               </td>
             </tr>
           ))}
